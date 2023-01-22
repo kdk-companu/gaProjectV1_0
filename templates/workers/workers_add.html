@@ -1,0 +1,70 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{title}}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'workers'%}"> Сотрудники</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="form-error">{{ forms.non_field_errors }}</div>
+                        <!-- /.card-header -->
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                {% for fr in form%}
+                                <div class="form-group">
+                                    <label>{{ fr.label }}:</label>
+                                    {{ fr }}
+                                </div>
+                                {% if fr.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ fr.errors }}
+                                      </div>
+                                      <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="row no-print">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-success float-right">Сохранить</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!--/.col (left) -->
+                <!-- right column -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+
+</div>
+{% endblock %}

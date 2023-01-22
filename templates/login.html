@@ -1,0 +1,41 @@
+<html lang="ru-ru" dir="ltr">
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/nav_sidebar.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/login.css">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+    <meta name="robots" content="NONE,NOARCHIVE">
+</head>
+<body class=" login" data-admin-utc-offset="10800">
+<!-- Container -->
+<div id="container">
+    <!-- END Header -->
+    <div class="main shifted" id="main">
+        <div class="content">
+            <!-- Content -->
+            <div id="content" class="colM">
+                <div id="content-main">
+                    <form action="" method="post" id="login-form">
+                        {% csrf_token %}
+                            {{ form.non_field_errors }}
+                        {% for fr in form%}
+                            <div class="form-row">
+                                <label class="required" for="id_username">{{fr.label}}</label>
+                                {{fr}}
+                            </div>
+                        {% endfor%}
+                          <div class="submit-row">
+                            <input type="submit" value="Войти">
+                          </div>
+                    </form>
+                </div>
+                <br class="clear">
+            </div>
+    </div>
+</div>
+<!-- END Container -->
+</body>
+</html>

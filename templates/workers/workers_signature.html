@@ -1,0 +1,99 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{title}} : {{ closed_information }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'workers'%}">Сотрудники</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'workers_views' closed_information.user.slug%}">{{ closed_information }}</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                            {% if closed_information.signature_example%}
+                            <img src="{{closed_information.signature_example.url}}" width="350" height="163">
+                            {%endif%}
+                            </div>
+                            <div class="text-center">Образец подписи:</div>
+                            <h3 class="profile-username text-center">{{closed_information.user}}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="card">
+                        {% if messages %}
+                            {% for message in messages %}
+                                {% if message.tags %}
+                                <div class="alert alert-success alert-dismissible">
+                                    {{ message }}
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="active tab-pane" id="activity">
+                                    <div class="post">
+                                        <p>
+                                        Правила добавления: <br>
+                                         - Ширина не менее 700px <br>
+                                         - Высота не менее 350px<br>
+                                         - Размер не более 1мб<br>
+                                         - Расширение PNG<br>
+                                        </p>
+                                        {% if form.errors %}
+                                        <div class="col-md-12">
+                                            <div class="card card-danger">
+                                              <div class="card-header">
+                                                <h3 class="card-title">Ошибка</h3>
+                                              </div>
+                                              <div class="card-body">
+                                                {{ form.errors.signature_example }}
+                                              </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        <div class="custom-file">
+                                             {{ form.signature_example}}
+                                            <label class="custom-file-label" for="customFile">Выберите файл</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success float-right" type="submit">Загрузить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+{% block script %}
+    <!-- DataTables  & Plugins -->
+<script src="{% static 'plugins/bs-custom-file-input/bs-custom-file-input.min.js'%}"></script>
+<script>
+    $(function () {
+      bsCustomFileInput.init();
+    });
+</script>
+{% endblock %}

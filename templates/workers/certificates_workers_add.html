@@ -1,0 +1,191 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block style %}
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Select2 -->
+<link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'%}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{% static 'css/adminlte.css'%}">
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{title}}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'workers_certificates'%}"> Сертификаты </a></li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        {% if messages %}
+                         {% for message in messages %}
+                             <div class="text-center alert alert-{{ message.tags }}">
+                                 {{ message|safe }}
+                             </div>
+                         {% endfor %}
+                        {% endif %}
+                        <div class="form-error">{{ forms.non_field_errors }}</div>
+                        <!-- /.card-header -->
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>{{ form.certificate.label }}:</label>
+                                    {{ form.certificate }}
+                                </div>
+                                {% if form.certificate.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.user.errors }}
+                                      </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--//-->
+                                <div class="form-group">
+                                    <label>{{ form.date_delivery.label }}:</label>
+                                    {{ form.date_delivery }}
+                                </div>
+                                {% if form.date_delivery.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.date_delivery.errors }}
+                                      </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--//-->
+                                <div class="form-group">
+                                    <label>{{ form.file1.label}}:</label>
+                                    <div class="custom-file">
+                                        {{ form.file1}}
+                                        <label class="custom-file-label" for="customFile">Выберите файл</label>
+                                    </div>
+                                </div>
+                                {% if form.file1.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.file1.errors }}
+                                      </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--//-->
+                                <div class="form-group">
+                                    <label>{{ form.file2.label}}:</label>
+                                    <div class="custom-file">
+                                        {{ form.file2}}
+                                        <label class="custom-file-label" for="customFile">Выберите файл</label>
+                                    </div>
+                                </div>
+                                {% if form.file2.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.file2.errors }}
+                                      </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--//-->
+                                <div class="form-group">
+                                    <label>{{ form.file3.label}}:</label>
+                                    <div class="custom-file">
+                                        {{ form.file3}}
+                                        <label class="custom-file-label" for="customFile">Выберите файл</label>
+                                    </div>
+                                </div>
+                                {% if form.file3.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.file3.errors }}
+                                      </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--//-->
+                            </div>
+                            <div class="row no-print">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-success float-right">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!--/.col (left) -->
+                <!-- right column -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+
+</div>
+{% endblock %}
+{% block script %}
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js'%}"></script>
+<!-- Select2 -->
+<script src="{% static 'plugins/select2/js/select2.full.min.js'%}"></script>
+<!-- InputMask -->
+<script src="{% static 'plugins/moment/moment.min.js'%}"></script>
+<script src="{% static 'plugins/moment/moment-with-locales.min.js'%}"></script>
+
+<script src="{% static 'plugins/jQuery-Mask/jquery.mask.js'%}"></script>
+
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js'%}"></script>
+    <!-- DataTables  & Plugins -->
+<script src="{% static 'plugins/bs-custom-file-input/bs-custom-file-input.min.js'%}"></script>
+<script>
+  $(function () {
+    bsCustomFileInput.init();
+    //Initialize Select2 Elements
+    $('.select2').select2();
+    //Date picker
+    $('#dateEmployment').datetimepicker({
+	    locale: 'ru',
+		stepping:10,
+		format: 'L',
+    });
+  })
+</script>
+{% endblock %}

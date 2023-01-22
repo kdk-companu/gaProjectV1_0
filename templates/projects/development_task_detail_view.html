@@ -1,0 +1,150 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Задание на разработку</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{% url 'base_page' %}">Главная</a></li>
+                            <li class="breadcrumb-item active"><a href="{% url 'development_task' %}">Задания на разработку</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+    <!-- Main content -->
+    <section class="content">
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{development_task.tasks_ppo}}</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-12 col-lg-12 order-2 order-md-1">
+              <div class="row">
+                <div class="col-12 col-sm-3">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted">Срок разработки ППО</span>
+                      <span class="info-box-number text-center text-muted mb-0">{{development_task.date_software_development_planned}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted">Срок разработки документации</span>
+                      <span class="info-box-number text-center text-muted mb-0">{{development_task.date_documentation_development_planned}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted">Дата заводской приемки</span>
+                      <span class="info-box-number text-center text-muted mb-0">{{development_task.date_factory_acceptance_actual}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted">Дата Отгрузка оборудования</span>
+                      <span class="info-box-number text-center text-muted mb-0">{{development_task.date_shipment_equipment_planned}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                      <div class="card-body">
+                        <dl>
+                          <dt>Название системы:</dt>
+                          <dd>{{development_task.name_systems}}</dd>
+                        </dl>
+                          <dl>
+                          <dt>Статус системы:</dt>
+                          <dd>{{development_task.get_status_systems_display}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Заказчик:</dt>
+                          <dd>{{development_task.customer}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Эксплуатация:</dt>
+                          <dd>{{development_task.exploitation}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Проектировщик:</dt>
+                          <dd>{{development_task.designer}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Объект:</dt>
+                          <dd>{{development_task.organizations_objects}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Позиция:</dt>
+                          <dd>{{development_task.objects_position}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>ГИП:</dt>
+                          <dd>{{development_task.gip}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Описание задания:</dt>
+                          <dd>{{development_task.task}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Отметка выполнения:</dt>
+                          <dd>{{development_task.get_status_display}}</dd>
+                        </dl>
+                          {% if date_software_development_actual%}
+                        <dl>
+                          <dt>Разработка ППО. Фактическая:</dt>
+                          <dd>{{development_task.date_software_development_actual}}</dd>
+                        </dl>
+                          {%endif%}
+                          {% if date_documentation_development_actual%}
+                        <dl>
+                          <dt>Разработка документации. Фактическая:</dt>
+                          <dd>{{development_task.date_documentation_development_actual}}</dd>
+                        </dl>
+                          {%endif%}
+                          {% if date_factory_acceptance_actual%}
+                        <dl>
+                          <dt>Заводская приемка. Фактическая:</dt>
+                          <dd>{{development_task.date_factory_acceptance_actual}}</dd>
+                        </dl>
+                          {%endif%}
+                          {% if date_shipment_equipment_actual%}
+                        <dl>
+                          <dt>Заводская приемка. Фактическая:</dt>
+                          <dd>{{development_task.date_shipment_equipment_actual}}</dd>
+                        </dl>
+                          {%endif%}
+
+                      </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+{% endblock %}

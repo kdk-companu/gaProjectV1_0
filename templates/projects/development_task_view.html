@@ -1,0 +1,125 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}">
+{% endblock %}
+
+{% block content %}
+<!-- Основное поле -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <div class="card">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Задание на разработку</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{% url 'base_page' %}">Главная</a></li>
+                            <li class="breadcrumb-item active">Задания на разработку</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="subdivision-table" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Задания на ППО</th>
+                                        <th>Название системы</th>
+                                        <th>Эксплуатация</th>
+                                        <th>Объект</th>
+                                        <th>Позиция</th>
+                                        <th>Состояние</th>
+                                        <th>Разработка ППО</th>
+                                        <th>Разработка документации</th>
+                                        <th>Заводская приемка</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>{{form}}
+                                    {% for development_task in developments_tasks%}
+                                    <tr>
+                                        <td><a href='{{development_task.get_absolute_url}}'>{{development_task.tasks_ppo}}</a></td>
+                                        <td>{{development_task.name_systems}}</td>
+                                        <td>{{development_task.exploitation}}</td>
+                                        <td>{{development_task.organizations_objects}}</td>
+                                        <td>{{development_task.objects_position}}</td>
+                                        <td>{{development_task.get_status_display}}</td>
+                                        <td>{% if development_task.date_software_development_planned %}
+                                            {{development_task.date_software_development_planned}}
+                                            {% endif%}
+                                        </td>
+                                        <td>{% if development_task.date_documentation_development_planned %}
+                                            {{development_task.date_documentation_development_planned}}
+                                            {% endif%}
+                                        </td>
+                                        <td>{% if development_task.date_factory_acceptance_planned %}
+                                            {{development_task.date_factory_acceptance_planned}}
+                                            {% endif%}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                {% if perms.workers.add_subdivision %}
+                <div class="row no-print">
+                    <div class="col-12">
+                        <a class="btn btn-success float-right" href="{% url 'development_task_add' %}">Добавить
+                            новое задание</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <!-- /.modal -->
+        </section>
+        <!-- /.content -->
+        <!-- Основное поле -->
+        {% endblock %}
+        {% block script %}
+        <!-- DataTables  & Plugins -->
+        <script src="{% static 'plugins/datatables/jquery.dataTables.min.js'%}"></script>
+        <script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js'%}"></script>
+        <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+        <script>
+        $(document).on("click", ".remove-subdivision", function () {
+             var slug = $(this).data('slug');
+             var text = $(this).data('text');
+             document.getElementById("button-remove").href="?remove="+slug;
+             document.getElementById("remove-text").innerText = "Вы пытаетесь удалить : '"+text+"'?";
+        });
+          $(function () {
+            $("#subdivision-table").DataTable({
+              "paging": false,
+              "lengthChange": false,
+              "searching": true,
+              "ordering": true,
+              "info": false,
+              "autoWidth": false,
+              "responsive": true
+            }).buttons().container().appendTo('#subdivision-table_wrapper .col-md-6:eq(0)');
+          });
+
+
+        </script>
+        {% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}">
+{% endblock %}
+{% block content %}
+<!-- Основное поле -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <div class="card">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Сотрудники</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                            <li class="breadcrumb-item active">Сотрудники</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="workers-table" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th width="50"></th>
+                                        <th>Ф.И.О.</th>
+                                        <th>Телефон</th>
+                                        <th>Должность</th>
+                                        <th>Номер табеля</th>
+                                        <th>Дата рождения</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for worker in workers%}
+                                    <tr>
+                                        <td>
+                                            <a href="{{worker.get_absolute_url}}">
+                                            {%if worker.image_smol %}
+                                            <img src="{{worker.image_smol.url}}" alt="user-avatar"
+                                                 class="img-circle img-bordered-sm" width="50" height="50">
+                                            {%endif%}
+                                            </a>
+                                        </td>
+                                        <td><a href="{{worker.get_absolute_url}}">{{worker}}</a></td>
+                                        <td><a href="{{worker.get_absolute_url}}">{{worker.phone}}</a></td>
+                                        <td>{{worker.chief.abbreviation}}</td>
+                                        <td><a href="{{worker.get_absolute_url}}">{{worker.user_basic_information.number_ga}}</a></td>
+                                        <td><a href="{{worker.get_absolute_url}}">{{worker.user_basic_information.date_birth|date:"d.m.Y"}}</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                {% if perms.workers.workers_add_superiors %}
+                <div class="row no-print">
+                    <div class="col-12">
+                        <a class="btn btn-success float-right"  href="{% url 'workers_add' %}">Добавить
+                            сотрудника</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+        </section>
+    </div>
+    <!-- /.modal -->
+    </section>
+    <!-- /.content -->
+    <!-- Основное поле -->
+    {% endblock %}
+    {% block script %}
+    <!-- DataTables  & Plugins -->
+    <script src="{% static 'plugins/datatables/jquery.dataTables.min.js'%}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+    <script>
+      $(function () {
+        $("#workers-table").DataTable({
+          language: {url: '{% static 'plugins/datatables/ru.json'%}'},
+          "paging": false,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": true,
+          "info": false,
+          "autoWidth": true,
+          "responsive": true
+        }).buttons().container().appendTo('#workers-table_wrapper .col-md-12:eq(0)');
+      });
+    </script>
+    {% endblock %}

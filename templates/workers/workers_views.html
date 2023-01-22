@@ -1,0 +1,275 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Информация о сотруднике.</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'base_page'%}">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'workers'%}">Сотрудники</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                {%if workers.image %}
+                                <img src="{{workers.image.url}}" alt="user-avatar"
+                                     class="img-circle img-bordered-sm">
+                                {%endif%}
+                            </div>
+                            <h3 class="profile-username text-center">{{workers}}</h3>
+                            <p class="text-muted text-center">{{workers.chief.name}}</p>
+                            {% if right_edit_photo %}
+                            <a href="{{workers.get_absolute_url_image}}" class="btn btn-primary btn-block"><b>Изменить
+                                изображение</b></a>
+                            {% endif %}
+                            {% if right_edit_contact %}
+                            <a href="{{workers.get_absolute_url_contacts}}" class="btn btn-primary btn-block"><b>Изменить контакты</b></a>
+                            {% endif %}
+                            {% if perms.workers.workers_change_superiors %}
+                            <a href="{{workers.get_absolute_url_edit}}" class="btn btn-primary btn-block"><b>Изменить
+                                информацию</b></a>
+                            {% endif %}
+                            {% if perms.workers.basic_change_superiors %}
+                            <a href="{{workers.get_absolute_url_basic_edit}}" class="btn btn-primary btn-block"><b>Изменить
+                                базовую информацию</b></a>
+                            {% endif %}
+                            {% if perms.workers.closed_change_superiors %}
+                            <a href="{{workers.get_absolute_url_closed_edit}}" class="btn btn-primary btn-block"><b>Изменить
+                                закрытую информацию</b></a>
+                            {% endif %}
+                            {% if workers == user%}
+                            <a href="{% url 'workers_change_password'%}" class="btn btn-primary btn-block"><b>Изменить пароль</b></a>
+                            {% endif %}
+                            {% if perms.workers.workers_update_password_superiors %}
+                            <a href="{{workers.get_absolute_url_update_pass}}" class="btn btn-primary btn-block"><b>Востановить пароль</b></a>
+                            {% endif %}
+                            {% if perms.workers.user_basic_add_passport_superiors %}
+                            <a href="{{workers.get_absolute_url_passport}}" class="btn btn-primary btn-block"><b>Добавить паспорт</b></a>
+                            {% endif %}
+                            {% if perms.workers.user_basic_add_inn_superiors %}
+                            <a href="{{workers.get_absolute_url_inn}}" class="btn btn-primary btn-block"><b>Добавить ИНН</b></a>
+                            {% endif %}
+                            {% if perms.workers.user_basic_add_snils_superiors %}
+                            <a href="{{workers.get_absolute_url_snils}}" class="btn btn-primary btn-block"><b>Добавить СНИЛС</b></a>
+                            {% endif %}
+                            {% if perms.workers.user_basic_add_archive_superiors %}
+                            <a href="{{workers.get_absolute_url_archive}}" class="btn btn-primary btn-block"><b>Архив при трудоустройстве</b></a>
+                            {% endif %}
+                            {% if perms.workers.user_basic_add_signature_superiors %}
+                            <a href="{{workers.get_absolute_url_signature}}" class="btn btn-primary btn-block"><b>Добавить подпись</b></a>
+                            {% endif %}
+                            {% if workers == user%}
+                            <a href="{{workers.get_absolute_url_certificate}}" class="btn btn-primary btn-block"><b>Добавить сертификаты</b></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="cell">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        Базовая информация
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <dl>
+                                        {% if workers.subdivision%}
+                                        <dt>Управление:</dt>
+                                        <dd>{{workers.subdivision}}</dd>
+                                        {% endif%}
+                                        {% if workers.department%}
+                                        <dt>Отдел:</dt>
+                                        <dd>{{workers.department}}</dd>
+                                        {% endif%}
+                                        {% if workers.chief%}
+                                        <dt>Должность:</dt>
+                                        <dd>{{workers.chief}}</dd>
+                                        {% endif%}
+                                        <dt>Статус</dt>
+                                        <dd>{{workers.get_employee_display}}</dd>
+                                        {% if workers.gender%}
+                                        <dt>Пол</dt>
+                                        <dd>{{base_information.get_gender_display}}</dd>
+                                        {% endif%}
+                                        {% if base_information.subdivision_in_company%}
+                                        <dt>Управление в котором числется</dt>
+                                        <dd>{{base_information.subdivision_in_company}}</dd>
+                                        {% endif %}
+                                        {% if base_information.department_in_company%}
+                                        <dt>Отдел в котором числется</dt>
+                                        <dd>{{base_information.department_in_company}}</dd>
+                                        {% endif %}
+                                        {% if base_information.date_employment%}
+                                        <dt>Дата трудоустройства</dt>
+                                        <dd>{{base_information.date_employment}}</dd>
+                                        {% endif %}
+                                        {% if base_information.date_chief%}
+                                        <dt>Дата в должности</dt>
+                                        <dd>{{base_information.date_chief}}</dd>
+                                        {% endif %}
+                                        {% if base_information.number_ga%}
+                                        <dt>Номер табеля</dt>
+                                        <dd>{{base_information.number_ga}}</dd>
+                                        {% endif %}
+                                        {% if base_information.date_birth%}
+                                        <dt>Дата рождения</dt>
+                                        <dd>{{base_information.date_birth}}</dd>
+                                        {% endif %}
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        Контакты
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <dl>
+                                        <dt>Основной телефон</dt>
+                                        <dd>{{workers.phone}}</dd>
+                                        <dt>Основная почта</dt>
+                                        <dd>{{workers.email}}</dd>
+                                        {%if base_information.email_home%}
+                                            <dt>Дополнительная почта</dt>
+                                            <dd>{{base_information.email_home}}</dd>
+                                        {%endif%}
+                                        {%if base_information.phone_additional1 or base_information.phone_additional2 %}
+                                            <dt>Дополнительные номера</dt>
+                                            {%if base_information.phone_additional1%}
+                                            <dd>{{base_information.phone_additional1}}</dd>
+                                            {%endif%}
+                                            {%if base_information.phone_additional2%}
+                                            <dd>{{base_information.phone_additional2}}</dd>
+                                            {%endif%}
+                                        {%endif%}
+                                        {%if base_information.home_address%}
+                                            <dt>Адрес проживания</dt>
+                                            <dd>{{base_information.home_address}}</dd>
+                                        {%endif%}
+                                        {%if base_information.home_metro%}
+                                            <dt>Адрес проживания</dt>
+                                            <dd>{{base_information.home_metro}}</dd>
+                                        {%endif%}
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        {%if closed_information%}
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        Закрытая информация
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <dl>
+                                        {% if closed_information.organization_order_of_employment %}
+                                        <dt>Приказ о трудоустройстве</dt>
+                                        <dd>{{closed_information.organization_order_of_employment}}</dd>
+                                        {%endif%}
+                                        {% if closed_information.organization_order_of_employment %}
+                                        <dt>Трудовой договор</dt>
+                                        <dd>{{closed_information.organization_labor_contract}}</dd>
+                                        {%endif%}
+                                        {% if closed_information.passport_serial %}
+                                        <dt>Паспорт Серия</dt>
+                                        <dd>{{closed_information.passport_serial}}</dd>
+                                        {%endif%}
+                                        {% if closed_information.passport_number %}
+                                        <dt>Паспорт Номер</dt>
+                                        <dd>{{closed_information.passport_number}}</dd>
+                                        {%endif%}
+                                        {% if closed_information.passport_passport_issued %}
+                                        <dt>Паспорт Выдан</dt>
+                                        <dd>{{closed_information.passport_passport_issued}}</dd>
+                                        {%endif%}
+                                        {% if closed_information.passport_passport_issued_date %}
+                                        <dt>Паспорт Дата выдачи</dt>
+                                        <dd>{{closed_information.passport_passport_issued_date}}</dd>
+                                        {%endif%}
+                                        {% if closed_information.passport_place_of_issue %}
+                                        <dt>Паспорт Код подразделения</dt>
+                                        <dd>{{closed_information.passport_place_of_issue}}</dd>
+                                        {%endif%}
+                                        {% if closed_information.passport_registration %}
+                                        <dt>Паспорт Место выдачи</dt>
+                                        <dd>{{closed_information.passport_registration}}</dd>
+                                        {%endif%}
+                                        {% if closed_information.passport_of_residence %}
+                                        <dt>Паспорт Место жительства</dt>
+                                        <dd>{{closed_information.passport_of_residence}}</dd>
+                                        {%endif%}
+                                        {% if closed_information.passport_scan %}
+                                        <dt>Паспорт Скан</dt>
+                                        {% if closed_information.passport_scan%}
+                                        <a href="{{closed_information.passport_scan.url}}">Открыть</a>
+                                        {% endif%}
+                                        </dd>
+                                        {%endif%}
+                                        {% if closed_information.inn_number %}
+                                        <dt>Инн номер</dt>
+                                        <dd>{{closed_information.inn_number}}</dd>
+                                        {%endif%}
+                                        {% if closed_information.inn_scan %}
+                                        <dt>ИНН скан</dt>
+                                        {% if closed_information.inn_scan%}
+                                        <a href="{{closed_information.inn_scan.url}}">Открыть</a>
+                                        {% endif%}
+                                        </dd>
+                                        {%endif%}
+                                        {% if closed_information.snils_number %}
+                                        <dt>СНИЛС номер</dt>
+                                        <dd>{{closed_information.snils_number}}</dd>
+                                        {%endif%}
+                                        {% if closed_information.snils_scan %}
+                                        <dt>СНИЛС скан</dt>
+                                        {% if closed_information.snils_scan%}
+                                        <a href="{{closed_information.snils_scan.url}}">Открыть</a>
+                                        {% endif%}
+                                        </dd>
+                                        {%endif%}
+                                        {% if closed_information.archive_documents_employment %}
+                                        <dt>Пакет документов при трудоустройстве</dt>
+                                        {% if closed_information.archive_documents_employment%}
+                                        <a href="{{closed_information.archive_documents_employment.url}}">Открыть</a>
+                                        {% endif%}
+                                        </dd>
+                                        {%endif%}
+                                        {% if closed_information.signature_example %}
+                                        <dt>Образец подписи</dt>
+                                        {% if closed_information.signature_example%}
+                                        <a href="{{closed_information.signature_example.url}}"><img src="{{closed_information.signature_example.url}}" width="175" height="65"></a>
+                                        {% endif%}
+                                        {%endif%}
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+    </section>
+
+</div>
+{% endblock %}

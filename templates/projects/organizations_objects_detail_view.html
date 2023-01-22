@@ -1,0 +1,67 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Фирмы</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{% url 'base_page' %}">Главная</a></li>
+                            <li class="breadcrumb-item active"><a href="{% url 'organization' %}">Фирмы</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+    <!-- Main content -->
+    <section class="content">
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{organization.name}}</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-12 col-lg-12 order-2 order-md-1">
+              <div class="row">
+                <div class="col-12">
+                      <div class="card-body">
+                          <dl>
+                          <dt>Направление фирмы:</dt>
+                          <dd>{{organization.get_status_display}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Сайт:</dt>
+                          <dd><a href="{{organization.site}}">{{organization.site}}</a></dd>
+                        </dl>
+                        <dl>
+                          <dt>Описание фирмы:</dt>
+                          <dd>{{organization.description}}</dd>
+                        </dl>
+                      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="row no-print">
+              <div class="col-12">
+                  <a class="btn btn-success float-right" href="{% url 'organization_edit' organization.slug %}">Редактировать</a>
+              </div>
+          </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+{% endblock %}

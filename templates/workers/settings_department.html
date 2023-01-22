@@ -1,0 +1,142 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}">
+{% endblock %}
+{% block content %}
+<!-- Основное поле -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <div class="card">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>{{title}}</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                            <li class="breadcrumb-item active">Настройки {{title}}</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="department-table" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Отдел</th>
+                                        <th>Сокращеное название</th>
+                                        <th>Описание</th>
+                                        {% if perms.workers.change_department or perms.workers.delete_department%}
+                                        <th></th>
+                                        {%endif%}
+                                    </tr>
+                                    </thead>
+                                    <tbody>{{form}}
+                                    {% for department in departments%}
+                                    <tr>
+                                        <td>{{department.name}}</td>
+                                        <td>{{department.abbreviation}}</td>
+                                        <td>{{department.description}}</td>
+                                    {% if perms.workers.change_department or perms.workers.delete_department%}
+                                        <td width="150px">
+                                            {% if perms.workers.change_department %}
+                                            <a class="btn btn-info btn-sm" href="{{department.get_absolute_url}}"><i
+                                                    class="fas fa-pencil-alt"></i> Edit</a>
+                                            {%endif%}
+                                            {% if perms.workers.delete_department %}
+                                            <a class="remove-department btn btn-danger btn-sm" data-toggle="modal"
+                                               data-target="#modal-default" data-slug="{{department.slug}}"
+                                               data-text="{{department.name}}"><i class="fas fa-trash"></i>Delete</a>
+                                            {%endif%}
+                                        </td>
+                                        {%endif%}
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                {% if perms.workers.add_department %}
+                <div class="row no-print">
+                    <div class="col-12">
+                        <a class="btn btn-success float-right" href="{% url 'department_add' %}">Добавить
+                            отдел</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <!-- /.container-fluid -->
+            <div class="modal fade" id="modal-default">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Подтверждение операции</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="remove-text"></p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                            <a href="" class="btn btn-primary" id="button-remove">Подтвердить</a>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+        </section>
+        <!-- /.content -->
+        <!-- Основное поле -->
+        {% endblock %}
+        {% block script %}
+        <!-- DataTables  & Plugins -->
+        <script src="{% static 'plugins/datatables/jquery.dataTables.min.js'%}"></script>
+        <script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js'%}"></script>
+        <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+        <script>
+        $(document).on("click", ".remove-department", function () {
+             var slug = $(this).data('slug');
+             var text = $(this).data('text');
+             document.getElementById("button-remove").href="?remove="+slug;
+             document.getElementById("remove-text").innerText = "Вы пытаетесь удалить : '"+text+"'?";
+        });
+          $(function () {
+            $("#department-table").DataTable({
+              language: {url: '{% static 'plugins/datatables/ru.json'%}'},
+              "paging": false,
+              "lengthChange": false,
+              "searching": true,
+              "ordering": true,
+              "info": false,
+              "autoWidth": false,
+              "responsive": true
+            }).buttons().container().appendTo('#department-table_wrapper .col-md-6:eq(0)');
+          });
+
+        </script>
+        {% endblock %}
