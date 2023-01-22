@@ -8,7 +8,7 @@ from django.views.generic import ListView, CreateView, UpdateView
 from django.contrib import messages
 
 from workers.forms import Certificates_Workers_Form_Control, Certificates_Form_Control, Certificates_Parts_Form_Control, \
-    Certificates_Workers_All_Form_Control
+    Certificates_Workers_All_Form_Control, Certificates_Parts_Form_Control
 from workers.mixin.rights_mixin import ViewsPermissionsMixin
 from workers.models import Сertificates, Сertificate_Users, User, Сertificate_Parts
 from workers.utils import DataMixin
@@ -243,7 +243,7 @@ class Сertificates_Parts_Update(LoginRequiredMixin, ViewsPermissionsMixin, Data
 
 class Сertificates_Parts_Add(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, CreateView):
     '''Части сертификатов. Добавление. '''
-    model = Сertificates
+    model = Сertificate_Parts
     template_name = 'workers/certificates_parts_control.html'
     success_url = reverse_lazy('certificates_parts')
     form_class = Certificates_Parts_Form_Control

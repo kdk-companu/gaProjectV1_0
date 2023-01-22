@@ -35,26 +35,103 @@
                         <form action="" method="post">
                             {% csrf_token %}
                             <div class="card-body">
-                                {% for fr in form%}
+                                <!-- -->
                                 <div class="form-group">
-                                    <label>{{ fr.label }}:</label>
-                                    {{ fr }}
+                                    <label>{{ form.name.label }}:</label>
+                                    {{ form.name }}
                                 </div>
-                                {% if fr.errors%}
+                                {% if form.name.errors%}
                                 <div class="col-md-12">
                                     <div class="card card-danger">
                                       <div class="card-header">
                                         <h3 class="card-title">Ошибка</h3>
                                       </div>
                                       <div class="card-body">
-                                        {{ fr.errors }}
+                                        {{ form.name.errors }}
                                       </div>
                                       <!-- /.card-body -->
                                     </div>
                                     <!-- /.card -->
                                 </div>
                                 {% endif %}
-                                {% endfor %}
+                                <!-- -->
+                                <div class="form-group">
+                                    <label>{{ form.abbreviation.label }}:</label>
+                                    {{ form.abbreviation }}
+                                </div>
+                                {% if form.abbreviation.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.abbreviation.errors }}
+                                      </div>
+                                      <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                {% endif %}
+                                <!-- -->
+                                <!-- -->
+                                <div class="form-group">
+                                    <label>{{ form.how_to_take.label }}:</label>
+                                    {{ form.how_to_take }}
+                                </div>
+                                {% if form.how_to_take.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.how_to_take.errors }}
+                                      </div>
+                                      <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                {% endif %}
+                                <!-- -->
+                                <!-- -->
+                                <div class="form-group">
+                                    <label>{{ form.answers.label }}:</label>
+                                    {{ form.answers }}
+                                </div>
+                                {% if form.answers.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.answers.errors }}
+                                      </div>
+                                      <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                {% endif %}
+                                <!-- -->
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        {{ form.state }}
+                                      <label class="custom-control-label" for="state">{{ form.state.label }}</label>
+                                    </div>
+                                </div>
+                                {% if form.state.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.state.errors }}
+                                      </div>
+                                    </div>
+                                </div>
+                                {% endif %}
                             </div>
                             <div class="row no-print">
                                 <div class="col-12">

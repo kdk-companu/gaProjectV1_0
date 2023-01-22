@@ -29,7 +29,7 @@ class Certificates_Workers_Form_Control(forms.ModelForm):
 
     class Meta:
         model = Сertificate_Users
-        fields = ['certificate', 'date_delivery','file1', 'file2', 'file3']
+        fields = ['certificate', 'date_delivery', 'file1', 'file2', 'file3']
         widgets = {
             'certificate': forms.Select(
                 attrs={'class': 'select2', 'style': 'width: 100%'}),
@@ -112,7 +112,6 @@ class Certificates_Workers_All_Form_Control(forms.ModelForm):
                 attrs={'class': 'custom-file-input', 'id': 'customFile3', 'accept': ".pdf"}
             ),
         }
-
     date_delivery = forms.DateField(
         widget=forms.DateInput(
             attrs={'class': 'form-control datepicker-input', 'data-target': '#dateEmployment',
@@ -126,9 +125,9 @@ class Certificates_Workers_All_Form_Control(forms.ModelForm):
 
 class Certificates_Form_Control(forms.ModelForm):
     '''Сертификаты.'''
+
     class Meta:
         model = Сertificates
-        # fields = '__all__'
         fields = ['name', 'abbreviation', 'how_to_take', 'answers', 'state']
         widgets = {
             'name': forms.TextInput(
@@ -140,13 +139,15 @@ class Certificates_Form_Control(forms.ModelForm):
             'answers': forms.Textarea(
                 attrs={'class': 'summernote', 'placeholder': 'Описание задания', 'id': 'answers'}),
             'state': forms.CheckboxInput(
-                attrs={'id': 'state',}),
+                attrs={'id': 'state', 'class': 'custom-control-input'}),
 
         }
 
-
 class Certificates_Parts_Form_Control(forms.ModelForm):
-    '''Сертификаты.'''
+    '''Части. Сертификатов.'''
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['certificates'].empty_label = "Укажите сертификат"
 
     class Meta:
         model = Сertificate_Parts
@@ -158,8 +159,8 @@ class Certificates_Parts_Form_Control(forms.ModelForm):
                 attrs={'class': 'form-control', 'placeholder': 'Название части сертификата',
                        'id': 'name'}),
             'validity': forms.TextInput(
-                attrs={'class': 'form-control', 'placeholder': 'Название части сертификата',
-                       'id': 'validity'}),
+                attrs={'class': 'form-control', 'id': 'validity', 'min': '0', 'data-bind': 'value:replyNumber',
+                       'type': "number"}),
             'change_chief': forms.CheckboxInput(
-                attrs={'id': 'state', }),
+                attrs={'id': 'change_chief', 'class': 'custom-control-input'}),
         }
