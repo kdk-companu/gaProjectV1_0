@@ -126,7 +126,6 @@ class Certificates_Workers_All_Form_Control(forms.ModelForm):
 
 class Certificates_Form_Control(forms.ModelForm):
     '''Сертификаты.'''
-
     class Meta:
         model = Сertificates
         # fields = '__all__'
@@ -151,16 +150,16 @@ class Certificates_Parts_Form_Control(forms.ModelForm):
 
     class Meta:
         model = Сertificate_Parts
-        fields = ['certificates', 'name', 'validity', 'change_chief', 'state']
-        # widgets = {
-        #     'name': forms.TextInput(
-        #         attrs={'class': 'form-control', 'placeholder': 'Название сертификата', 'id': 'name'}),
-        #     'abbreviation': forms.TextInput(
-        #         attrs={'class': 'form-control', 'placeholder': 'Сокращенное название', 'id': 'abbreviation'}),
-        #     'how_to_take': forms.TextInput(
-        #         attrs={'class': 'form-control', 'placeholder': 'Как сдавать', 'id': 'how_to_take'}),
-        #     'answers': forms.TextInput(
-        #         attrs={'class': 'form-control', 'placeholder': 'Ответы', 'id': 'answers'}),
-        #     'state': forms.TextInput(
-        #         attrs={'class': 'form-control', 'placeholder': 'Актуальность', 'id': 'state'})
-        # }
+        fields = ['certificates', 'name', 'validity', 'change_chief']
+        widgets = {
+            'certificates': forms.Select(
+                attrs={'class': 'select2', 'style': 'width: 100%'}),
+            'name': forms.TextInput(
+                attrs={'class': 'form-control', 'placeholder': 'Название части сертификата',
+                       'id': 'name'}),
+            'validity': forms.TextInput(
+                attrs={'class': 'form-control', 'placeholder': 'Название части сертификата',
+                       'id': 'validity'}),
+            'change_chief': forms.CheckboxInput(
+                attrs={'id': 'state', }),
+        }
