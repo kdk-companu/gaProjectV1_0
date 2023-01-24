@@ -17,6 +17,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'workers_certificates'%}">Сертификаты сотрудников</a></li>
                         <li class="breadcrumb-item"><a href="{% url 'certificates'%}">Сертификаты</a></li>
                     </ol>
                 </div>
@@ -74,7 +75,6 @@
                                 </div>
                                 {% endif %}
                                 <!-- -->
-                                <!-- -->
                                 <div class="form-group">
                                     <label>{{ form.how_to_take.label }}:</label>
                                     {{ form.how_to_take }}
@@ -93,7 +93,6 @@
                                     <!-- /.card -->
                                 </div>
                                 {% endif %}
-                                <!-- -->
                                 <!-- -->
                                 <div class="form-group">
                                     <label>{{ form.answers.label }}:</label>
@@ -143,7 +142,6 @@
                     <!-- /.card -->
                 </div>
                 <!--/.col (left) -->
-                <!-- right column -->
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -155,11 +153,9 @@
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
 <!-- Summernote -->
 <script src="{% static 'plugins/summernote/summernote-bs4.min.js'%}"></script>
-    <script>
+<script>
     $(document).ready(function() {
         $('.summernote').summernote();
     });
-
-
-    </script>
+</script>
 {% endblock %}

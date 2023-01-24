@@ -37,7 +37,6 @@ class Workers(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, ListView):
         subdivision = self.request.user.subdivision.slug if self.request.user.subdivision else ''
         query_subdivision = self.request.GET.get('subdivision') if self.request.GET.get(
             'subdivision') else subdivision
-
         department = self.request.user.department.slug if self.request.user.department else ''
         query_department = self.request.GET.get('department') if self.request.GET.get(
             'department') else department

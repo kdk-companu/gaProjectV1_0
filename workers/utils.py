@@ -3,7 +3,7 @@ project_menus = {
         'menu_up': [{'title_up': 'Сертификаты', 'icon_up': 'nav-icon fas fa-file', 'url_up': 'workers_certificates'},
                     {'title_up': 'Сотрудники', 'icon_up': 'nav-icon fas fa-user-circle', 'url_up': 'workers'},
                     # {'title_up': 'Оборудование', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'workers'},
-                    # {'title_up': 'Квалификации', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'workers'},
+                    # {'title_up': 'Специализация', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'workers'},
                     # {'title_up': 'СИЗ', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'workers'},
                     # {'title_up': 'Табеля', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'workers'}
                     ]
@@ -13,9 +13,11 @@ project_menus = {
             {'title_up': 'Задания на разработку', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'development_task'},
             # {'title_up': 'Заводские испытания', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'development_task'},
             # {'title_up': 'Ожидание наладки', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'development_task'},
-            # {'title_up': 'Пусконаладка', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'development_task'},
+            # {'title_up': 'Наладка', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'development_task'},
             # {'title_up': 'Опытная эксплуатация', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'development_task'},
             # {'title_up': 'Законченные проекты', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'development_task'}
+            # {'title_up': 'Тех. обслуживание', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'development_task'},
+            # {'title_up': 'Задачник', 'icon_up': 'nav-icon fas fa-book', 'url_up': 'development_task'},
         ]
         },
     # 3: {'name': 'Документация', 'access': '1',

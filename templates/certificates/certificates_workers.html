@@ -1,13 +1,11 @@
 {% extends 'base.html'%}
 {% load static %}
 {% block style %}
-<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}">
-<link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}">
-<link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}">
+    <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}">
+    <link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}">
+    <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}">
 {% endblock %}
 {% block content %}
-<!-- Основное поле -->
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <div class="card">
         <!-- Content Header (Page header) -->
@@ -19,8 +17,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Главная</a></li>
-                            <li class="breadcrumb-item"><a href="{% url 'workers_certificates'%}">Сертификаты</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'base_page'%}">Главная</a></li>
+                            <li class="breadcrumb-item"></li>
                         </ol>
                     </div>
                 </div>
@@ -101,18 +99,18 @@
                     <!-- /.col -->
                 </div>
                 <!-- /.row -->
-                {% if perms.workers.add_subdivision %}{% endif %}
                 <div class="timeline-footer">
-                    <a class="btn btn-primary btn-sm" href="{% url 'certificates' %}">Настройки сертификатов</a>
-                    <a class="btn btn-primary btn-sm" href="{% url 'certificates_parts' %}">Настройки частей сертификатов</a>
-                    <a class="btn btn-success btn-sm float-right" href="{% url 'workers_certificate_add_all' %}">Добавить сертификат</a>
+                    {% if perms.workers_certificates.certificates_view %}
+                    <a class="btn btn-primary btn-sm" href="{% url 'certificates' %}">Описание сертификатов</a>{% endif %}
+                    {% if perms.workers_certificates.certificate_parts_view %}
+                    <a class="btn btn-primary btn-sm" href="{% url 'certificates_parts' %}">Описание частей сертификатов</a>{% endif %}
+                    {% if perms.workers_certificates.certificate_users_add_superiors%}
+                    <a class="btn btn-success btn-sm float-right" href="{% url 'workers_certificate_add_all' %}">Добавить сертификат</a>{% endif %}
                 </div>
             </div>
-
         </section>
     </div>
-    <!-- /.modal -->
-    </section>
+</div>
     <!-- /.content -->
     <!-- Основное поле -->
     {% endblock %}

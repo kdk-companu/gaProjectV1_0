@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from workers.models import User, User_Basic_Information, User_Closed_Information, Сertificate_Parts, Сertificates, \
-    Сertificate_Users
+from workers.models import User, User_Basic_Information, User_Closed_Information
 from workers.models.workers_settings import *
 from django.utils.translation import gettext_lazy as _
 
@@ -46,7 +45,7 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(User, CustomUserAdmin)
 
-admin.site.register(Сertificates)
-admin.site.register(Сertificate_Parts)
-admin.site.register(Сertificate_Users)
+# admin.site.register(Сertificates)
+# admin.site.register(Сertificate_Parts)
+# admin.site.register(Сertificate_Users)
 

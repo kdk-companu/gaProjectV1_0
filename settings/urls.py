@@ -9,21 +9,21 @@ from workers.views import Workers_Login, Workers_Logout, error_noAccess_403
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('workers.urls')),
+    path('', include('workers_certificates.urls')),
     path('', include('projects.urls')),
-
 
     path('login/', Workers_Login.as_view(), name='login'),
     path('logout/', Workers_Logout.as_view(), name='logout'),
 
 ]
 # обработчик для 404. Страница не найдена
-#handler404 = error_pageNotFound_404
+# handler404 = error_pageNotFound_404
 # ошибка сервера
-#handler500 = error_errorServer_500
+# handler500 = error_errorServer_500
 # доступ запрещен
 handler403 = error_noAccess_403
 # невозможно обработать запрос
-#handler400 = error_error_400
+# handler400 = error_error_400
 
 # Все пользователи
 # Страничка одного пользователя

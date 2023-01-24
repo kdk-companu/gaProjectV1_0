@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'changelog_workers.apps.ChangelogConfig',
     'workers.apps.WorkersConfig',
+    'workers_certificates.apps.WorkersCertificatesConfig',
     'projects.apps.ProjectConfig',
 
 ]

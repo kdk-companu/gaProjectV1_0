@@ -21,7 +21,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Главная</a></li>
-                        <li class="breadcrumb-item"><a href="{% url 'workers_certificates'%}"> Сертификаты </a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'workers_certificates'%}">Сертификаты сотрудников</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'certificates_parts'%}"> Части сертификатов </a></li>
                     </ol>
                 </div>
             </div>
@@ -111,6 +112,25 @@
                                       </div>
                                       <div class="card-body">
                                         {{ form.change_chief.errors }}
+                                      </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--//-->
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        {{ form.state }}
+                                      <label class="custom-control-label" for="state">{{ form.state.label }}</label>
+                                    </div>
+                                </div>
+                                {% if form.state.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.state.errors }}
                                       </div>
                                     </div>
                                 </div>

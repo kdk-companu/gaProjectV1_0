@@ -77,11 +77,8 @@
                 </div>
                 <!-- /.row -->
                 {% if perms.workers.add_subdivision %}
-                <div class="row no-print">
-                    <div class="col-12">
-                        <a class="btn btn-success float-right" href="{% url 'subdivision_add' %}">Добавить
-                            Управления/Подразделения</a>
-                    </div>
+                <div class="timeline-footer">
+                    <a class="btn btn-success btn-sm float-right" href="{% url 'subdivision_add' %}">Добавить Управления/Подразделения</a>
                 </div>
                 {% endif %}
             </div>

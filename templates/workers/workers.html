@@ -73,11 +73,8 @@
                 </div>
                 <!-- /.row -->
                 {% if perms.workers.workers_add_superiors %}
-                <div class="row no-print">
-                    <div class="col-12">
-                        <a class="btn btn-success float-right"  href="{% url 'workers_add' %}">Добавить
-                            сотрудника</a>
-                    </div>
+                <div class="timeline-footer">
+                    <a class="btn btn-success btn-sm float-right" href="{% url 'workers_add' %}">Добавить сотрудника</a>
                 </div>
                 {% endif %}
             </div>

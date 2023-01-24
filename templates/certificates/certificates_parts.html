@@ -1,13 +1,11 @@
 {% extends 'base.html'%}
 {% load static %}
-
 {% block style %}
-<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}">
-<link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}">
-<link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}">
+    <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}">
+    <link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}">
+    <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}">
 {% endblock %}
 {% block content %}
-<!-- Основное поле -->
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <div class="card">
@@ -16,12 +14,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Настройки сертификатов</h1>
+                        <h1>Настройки частей сертификатов</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Главная</a></li>
-                        <li class="breadcrumb-item"><a href="{% url 'workers_certificates'%}">Сертификаты сотрудников</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'base_page'%}">Главная</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'workers_certificates'%}">Сертификаты
+                                сотрудников</a></li>
                         </ol>
                     </div>
                 </div>
@@ -38,32 +37,38 @@
                                 <table id="subdivision-table" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>Название сертификата</th>
-                                        <th>Сокращенное название</th>
-                                        <th>Как сдавать</th>
-                                        <th>Ответы</th>
-                                        {% if perms.workers.change_subdivision or perms.workers.delete_subdivision%}
+                                        <th>Сертификат</th>
+                                        <th>Часть сертификата</th>
+                                        <th>Срок годности</th>
+                                        <th>Не актуальность при смене должности</th>
+                                        {% if perms.workers_certificates.certificate_parts_change or perms.workers_certificates.certificate_parts_delete%}
                                         <th></th>
                                         {%endif%}
                                     </tr>
                                     </thead>
                                     <tbody>{{form}}
-                                    {% for certificate in certificates%}
+                                    {% for certificate_part in certificates_parts%}
                                     <tr>
-                                        <td>{{certificate.name}}</td>
-                                        <td>{{certificate.abbreviation}}</td>
-                                        <td>{{certificate.how_to_take|safe}}</td>
-                                        <td>{{certificate.answers|safe}}</td>
-                                        {% if perms.workers.change_subdivision or perms.workers.delete_subdivision%}
+                                        <td>{{certificate_part.certificates}}</td>
+                                        <td>{{certificate_part.name}}</td>
+                                        <td>{{certificate_part.validity}} Мес.</td>
+                                        <td>
+                                            {% if certificate_part.change_chief%}
+                                                Требуется сдавать
+                                            {% else %}
+                                                Не требуется сдавать
+                                            {% endif %}
+                                        </td>
+                                        {% if perms.workers_certificates.certificate_parts_change or perms.workers_certificates.certificate_parts_delete%}
                                         <td width="150px">
-                                            {% if perms.workers.change_subdivision %}
-                                            <a class="btn btn-info btn-sm" href="{{certificate.get_absolute_url}}"><i
-                                                    class="fas fa-pencil-alt"></i> Edit</a>
+                                            {% if perms.workers_certificates.certificate_parts_change %}
+                                            <a class="btn btn-info btn-sm" href="{{certificate_part.get_absolute_url}}"><i
+                                                    class="fas fa-pencil-alt"></i>Изм.</a>
                                             {%endif%}
-                                            {% if perms.workers.delete_subdivision %}
+                                            {% if perms.workers_certificates.certificate_parts_delete %}
                                             <a class="remove-subdivision btn btn-danger btn-sm" data-toggle="modal"
-                                               data-target="#modal-default" data-slug="{{certificate.slug}}"
-                                               data-text="{{certificate.name}}"><i class="fas fa-trash"></i>Delete</a>
+                                               data-target="#modal-default" data-slug="{{certificate_part.slug}}"
+                                               data-text="{{certificate_part.name}}"><i class="fas fa-trash"></i>Удалить</a>
                                             {%endif%}
                                         </td>
                                         {%endif%}
@@ -78,9 +83,10 @@
                     <!-- /.col -->
                 </div>
                 <!-- /.row -->
-                {% if perms.workers.add_subdivision %}
+                {% if perms.workers_certificates.certificate_parts_add %}
                 <div class="timeline-footer">
-                    <a class="btn btn-success btn-sm float-right" href="{% url 'certificates_add' %}">Добавить сертификат</a>
+                    <a class="btn btn-success btn-sm float-right" href="{% url 'certificates_parts_add' %}">Добавить
+                        часть сертификата</a>
                 </div>
                 {% endif %}
             </div>
@@ -135,6 +141,7 @@
               "responsive": true
             }).buttons().container().appendTo('#subdivision-table_wrapper .col-md-6:eq(0)');
           });
+
 
         </script>
         {% endblock %}
