@@ -63,17 +63,10 @@ class Organizations_Objects(models.Model):
         ('Running', 'Выполняется'),
         ('Suspended', 'Приостановлено'),
     )
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE,
-                                     verbose_name='Эксплуатирующая фирма')
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, verbose_name='Эксплуатирующая фирма')
     name = models.CharField(max_length=255, unique=True, verbose_name='Название объекта')
     name_tables = models.CharField(max_length=80, unique=True, blank=False, verbose_name='Название для табеля')
     short_names = models.CharField(max_length=80, unique=True, blank=True, verbose_name='Обиходные название')
-
-
-
-
-
-
     description = models.TextField(verbose_name='Описание объекта', blank=True)
     property_location = models.TextField(verbose_name='Расположение объекта. Транспорт.', blank=True)
 
@@ -156,7 +149,7 @@ class Objects_Position(models.Model):
                                                blank=True)
     # Добавить статусы на систему
     stage = models.CharField(verbose_name='Состояние проекта', choices=PROJECT_STAGE, max_length=50,
-                              default='Factory_acceptance')
+                             default='Factory_acceptance')
 
     slug = models.SlugField(max_length=100, unique=True, db_index=True,
                             verbose_name='URL')  # unique - Уникальное,db_index - индексируемое

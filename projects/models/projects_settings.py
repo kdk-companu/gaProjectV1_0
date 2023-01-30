@@ -44,6 +44,7 @@ class Organization(models.Model):
 class Status_Projects(models.Model):
     CURRENT_STATE_CHOICES = (
         ('Done', 'Отсутсвует'),
+        ('Project development', 'Разработка проекта'),
         ('Factory tested', 'Заводская испытания'),
         ('Waiting adjustment', 'Ожидание наладки'),
         ('Commissioning works', 'Пусконаладочные работы'),
