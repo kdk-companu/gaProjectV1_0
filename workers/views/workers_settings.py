@@ -24,7 +24,7 @@ def info2(request):
 class Subdivision_Update(LoginRequiredMixin,ViewsPermissionsMixin, DataMixin, UpdateView):
     '''Урпавление. Изменение '''
     model = Subdivision
-    template_name = 'workers/development_task_add.html'
+    template_name = 'workers/settings_subdivision_control.html'
     form_class = Subdivision_Form_Control
     success_url = reverse_lazy('subdivision')
     login_url = 'login'
