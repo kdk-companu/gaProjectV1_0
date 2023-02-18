@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block style %}
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Select2 -->
+<link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'%}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{% static 'css/adminlte.css'%}">
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+
+
+<div class="center">
+	<form method="post">
+		{% csrf_token %}
+		<h2>Delete Task</h2>
+		<p>Are you sure that you want to delete "{{task}}"?</p>
+		<p class="form-buttons">
+			<input type="submit" class="btn btn-primary" value="Delete">
+			<a href="{% url 'development_task'%}" class="btn btn-outline">Cancel</a>
+		</p>
+	</form>
+</div>
+
+</div>
+
+
+{% endblock %}
+{% block script %}
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js'%}"></script>
+<!-- Select2 -->
+<script src="{% static 'plugins/select2/js/select2.full.min.js'%}"></script>
+<!-- InputMask -->
+<script src="{% static 'plugins/moment/moment.min.js'%}"></script>
+<script src="{% static 'plugins/moment/moment-with-locales.min.js'%}"></script>
+
+<script src="{% static 'plugins/jQuery-Mask/jquery.mask.js'%}"></script>
+
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js'%}"></script>
+
+{% endblock %}

@@ -17,7 +17,7 @@ from workers_certificates.models import Сertificate_Users, Сertificates, Сert
 class Certificate_Workers(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, ListView):
     '''Вывести все сертификаты'''
     model = Сertificate_Users
-    template_name = 'certificates/certificates_workers.html'
+    template_name = 'workers_certificates/certificates_workers.html'
     login_url = 'login'
     redirect_field_name = ''
     context_object_name = 'certificate_workers'
@@ -97,7 +97,7 @@ class Certificate_Workers(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, 
 
 class Certificate_Workers_Add(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, CreateView):
     model = Сertificate_Users
-    template_name = 'certificates/certificates_workers_add.html'
+    template_name = 'workers_certificates/certificates_workers_add.html'
     form_class = Certificates_Workers_Form_Control
     permission_required = 'workers_certificates.certificate_users_add'
     user_add = ''
@@ -122,7 +122,7 @@ class Certificate_Workers_Add(LoginRequiredMixin, ViewsPermissionsMixin, DataMix
 
 class Certificate_Workers_Add_All(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, CreateView):
     model = Сertificate_Users
-    template_name = 'certificates/certificates_workers_add_all.html'
+    template_name = 'workers_certificates/certificates_workers_add_all.html'
     form_class = Certificates_Workers_All_Form_Control
     permission_required = 'workers_certificates.certificate_users_add_superiors'
     user_add = ''
@@ -146,7 +146,7 @@ class Certificate_Workers_Add_All(LoginRequiredMixin, ViewsPermissionsMixin, Dat
 class Сertificates_View(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, ListView):
     '''Сертификаты. Визуализация.'''
     model = Сertificates
-    template_name = 'certificates/certificates.html'
+    template_name = 'workers_certificates/certificates.html'
     login_url = 'login'
     redirect_field_name = ''
     permission_required = 'workers_certificates.certificates_view'
@@ -172,7 +172,7 @@ class Сertificates_View(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, L
 class Сertificates_Update(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, UpdateView):
     '''Сертификаты. Изменение '''
     model = Сertificates
-    template_name = 'certificates/certificates_control.html'
+    template_name = 'workers_certificates/certificates_control.html'
     form_class = Certificates_Form_Control
     success_url = reverse_lazy('certificates')
     login_url = 'login'
@@ -194,7 +194,7 @@ class Сertificates_Update(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin,
 class Сertificates_Add(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, CreateView):
     '''Сертификаты. Добавление. '''
     model = Сertificates
-    template_name = 'certificates/certificates_control.html'
+    template_name = 'workers_certificates/certificates_control.html'
     success_url = reverse_lazy('certificates')
     form_class = Certificates_Form_Control
     login_url = 'login'
@@ -211,7 +211,7 @@ class Сertificates_Add(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, Cr
 class Сertificates_Parts_View(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, ListView):
     '''Части сертификатов. Визуализация.'''
     model = Сertificate_Parts
-    template_name = 'certificates/certificates_parts.html'
+    template_name = 'workers_certificates/certificates_parts.html'
     login_url = 'login'
     redirect_field_name = ''
     permission_required = 'workers_certificates.certificate_parts_view'
@@ -235,7 +235,7 @@ class Сertificates_Parts_View(LoginRequiredMixin, ViewsPermissionsMixin, DataMi
 class Сertificates_Parts_Update(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, UpdateView):
     '''Части сертификатов. Изменение '''
     model = Сertificate_Parts
-    template_name = 'certificates/certificates_parts_control.html'
+    template_name = 'workers_certificates/certificates_parts_control.html'
     form_class = Certificates_Parts_Form_Control
     success_url = reverse_lazy('certificates_parts')
     login_url = 'login'
@@ -256,7 +256,7 @@ class Сertificates_Parts_Update(LoginRequiredMixin, ViewsPermissionsMixin, Data
 class Сertificates_Parts_Add(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, CreateView):
     '''Части сертификатов. Добавление. '''
     model = Сertificate_Parts
-    template_name = 'certificates/certificates_parts_control.html'
+    template_name = 'workers_certificates/certificates_parts_control.html'
     success_url = reverse_lazy('certificates_parts')
     form_class = Certificates_Parts_Form_Control
     login_url = 'login'

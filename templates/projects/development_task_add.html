@@ -17,12 +17,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{title}} : {{ workers }}</h1>
+                    <h1>{{title}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Главная</a></li>
-                        <li class="breadcrumb-item"></li>
+                        <li class="breadcrumb-item"><a href="{% url 'development_task'%}">Задание на разработку</a></li>
+
                     </ol>
                 </div>
             </div>
@@ -33,7 +34,6 @@
             <div class="row">
                 <!-- left column -->
                 <div class="col-md-12">
-
                  {% if messages %}
                      {% for message in messages %}
                          <div class="text-center alert alert-{{ message.tags }}">
@@ -41,35 +41,305 @@
                          </div>
                      {% endfor %}
                  {% endif %}
-
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="form-error">{{ forms.non_field_errors }}</div>
                         <form action="" method="post">
                             {% csrf_token %}
                             <div class="card-body">
-                                {% for fr in form%}
+                                <!--start //-->
                                 <div class="form-group">
-                                    <label>{{ fr.label }}:</label>
-                                    {{ fr }}
+                                    <label>{{ form.project.label }}:</label>
+                                    {{ form.project }}
+                                    <a href="{% url 'projects'%}">Добавить проект</a>
                                 </div>
-                                {% if fr.errors%}
+                                {% if form.project.errors%}
                                 <div class="col-md-12">
                                     <div class="card card-danger">
                                         <div class="card-header">
                                             <h3 class="card-title">Ошибка</h3>
                                         </div>
                                         <div class="card-body">
-                                            {{ fr.errors }}
+                                            {{ form.project.errors }}
                                         </div>
                                     </div>
                                 </div>
                                 {% endif %}
-                                {% endfor %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.tasks_ppo.label }}:</label>
+                                    {{ form.tasks_ppo }}
+                                </div>
+                                {% if form.tasks_ppo.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.tasks_ppo.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.name.label }}:</label>
+                                    {{ form.name }}
+                                </div>
+                                {% if form.name.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.name.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.gip.label }}:</label>
+                                    {{ form.gip }}
+                                </div>
+                                {% if form.gip.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.gip.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.designer.label }}:</label>
+                                    {{ form.designer }}
+                                </div>
+                                {% if form.designer.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.designer.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.part_equipment.label }}:</label>
+                                    {{ form.part_equipment }}
+                                </div>
+                                {% if form.part_equipment.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.part_equipment.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.task.label }}:</label>
+                                    {{ form.task }}
+                                </div>
+                                {% if form.task.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.task.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.documentation_development.label }}:</label>
+                                    {{ form.documentation_development }}
+                                </div>
+                                {% if form.documentation_development.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.documentation_development.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.date_documentation_development_planned.label }}:</label>
+                                    {{ form.date_documentation_development_planned }}
+                                </div>
+                                {% if form.date_documentation_development_planned.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.date_documentation_development_planned.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.date_software_development_planned.label }}:</label>
+                                    {{ form.date_software_development_planned }}
+                                </div>
+                                {% if form.date_software_development_planned.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.date_software_development_planned.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.date_equipment_assembly_planned.label }}:</label>
+                                    {{ form.date_equipment_assembly_planned }}
+                                </div>
+                                {% if form.date_equipment_assembly_planned.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.date_equipment_assembly_planned.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.date_factory_acceptance_planned.label }}:</label>
+                                    {{ form.date_factory_acceptance_planned }}
+                                </div>
+                                {% if form.date_factory_acceptance_planned.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.date_factory_acceptance_planned.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.date_shipment_equipment_planned.label }}:</label>
+                                    {{ form.date_shipment_equipment_planned }}
+                                </div>
+                                {% if form.date_shipment_equipment_planned.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.date_shipment_equipment_planned.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.source_data_folder.label }}:</label>
+                                    {{ form.source_data_folder }}
+                                </div>
+                                {% if form.source_data_folder.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.source_data_folder.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.subdivision.label }}:</label>
+                                    {{ form.subdivision }}
+                                </div>
+                                {% if form.subdivision.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.subdivision.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
+                                <!--start //-->
+                                <div class="form-group">
+                                    <label>{{ form.department.label }}:</label>
+                                    {{ form.department }}
+                                </div>
+                                {% if form.department.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.department.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--end//-->
                             </div>
                             <div class="row no-print">
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-success float-right">Сохранить</button>
+                                    <button type="submit" class="btn btn-success btn-sm float-right">Добавить</button>
                                 </div>
                             </div>
                         </form>

@@ -25,9 +25,8 @@ def workers_image_path(instance, filename):
 
 
 class User(ChangeloggableMixin, AbstractBaseUser, PermissionsMixin):
-    '''Сотрудники переписанная от User'''
-
-    '''https://docs.djangoproject.com/en/4.1/ref/models/instances/'''
+    """Сотрудники переписанная от User
+        https://docs.djangoproject.com/en/4.1/ref/models/instances/"""
 
     WORKERS_STATUS = (
         ('employee', 'Сотрудник'),

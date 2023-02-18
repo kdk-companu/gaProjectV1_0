@@ -1,16 +1,16 @@
 from django.contrib import admin
 
-# Register your models here.
-from projects.models import Development_Task, Organization, Organizations_Objects, Objects_Position, Type_Document, \
-    Organizations_Objects_Documents, Objects_Position_Documents, Produced_Сabinets
+from projects.models import Organization_Direction, Organization, Type_Document
+from projects.models.projects import Organizations_Objects, Project, Development_Task, Position_Objects, Сabinet
 
+admin.site.register(Organization_Direction)
 admin.site.register(Organization)
-admin.site.register(Organizations_Objects)
-admin.site.register(Objects_Position)
-admin.site.register(Development_Task)
-admin.site.register(Type_Document)
-admin.site.register(Organizations_Objects_Documents)
-admin.site.register(Objects_Position_Documents)
-admin.site.register(Produced_Сabinets)
 
+admin.site.register(Type_Document)
+
+admin.site.register(Organizations_Objects)
+admin.site.register(Project)
+admin.site.register(Development_Task)
+admin.site.register(Position_Objects)
+admin.site.register(Сabinet)
 

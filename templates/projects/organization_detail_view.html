@@ -8,12 +8,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Фирмы</h1>
+                        <h1>Организация</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{% url 'base_page' %}">Главная</a></li>
-                            <li class="breadcrumb-item active"><a href="{% url 'organization' %}">Фирмы</a></li>
+                            <li class="breadcrumb-item active"><a href="{% url 'organization' %}">Организации</a></li>
                         </ol>
                     </div>
                 </div>
@@ -33,15 +33,15 @@
                 <div class="col-12">
                       <div class="card-body">
                           <dl>
-                          <dt>Направление фирмы:</dt>
-                          <dd>{{organization.get_status_display}}</dd>
+                          <dt>Направление деятельности:</dt>
+                          <dd>{{organization.organization_direction}}</dd>
                         </dl>
                         <dl>
                           <dt>Сайт:</dt>
                           <dd><a href="{{organization.site}}">{{organization.site}}</a></dd>
                         </dl>
                         <dl>
-                          <dt>Описание фирмы:</dt>
+                          <dt>Описание:</dt>
                           <dd>{{organization.description}}</dd>
                         </dl>
                       </div>

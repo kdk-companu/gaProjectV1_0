@@ -1,0 +1,105 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Позиция на объекте : {{position_objects.organizations_objects.name}}</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{% url 'base_page' %}">Главная</a></li>
+                            <li class="breadcrumb-item active"><a href="{% url 'position_objects' %}">Позиции на объекте</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+    <!-- Main content -->
+    <section class="content">
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Позиция : {{position_objects.name}}</h3>
+        </div>
+        <div class="card-body">
+
+
+                        <dl>
+                          <dt>Эксплуатирующая организация:</dt>
+                          <dd>{{position_objects.organizations_objects.organization}}</dd>
+                        </dl>
+                          <dl>
+                          <dt>Название объекта:</dt>
+                          <dd>{{position_objects.organizations_objects.name}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Задание на ППО:</dt>
+                          <dd>{{position_objects.development_task.tasks_ppo}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Название позиции:</dt>
+                          <dd>{{position_objects.name}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Обиходные название:</dt>
+                          <dd>{{position_objects.short_names}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Описание позиции:</dt>
+                          <dd>{{position_objects.description|linebreaks}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Отметка выполнения:</dt>
+                          <dd>{{position_objects.get_status_display}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Статус проекта:</dt>
+                          <dd>{{position_objects.get_сurrent_state_display}}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Проверяющие:</dt>
+                          <dd>
+                              {% if position_objects.checker%}
+                                  {% for cheker_user in position_objects.checker.all%}
+                                      <a href="{% url 'workers_views' cheker_user.slug%}">{{cheker_user}}</a><br>
+                                  {% endfor%}
+                              {%else%}
+                                Проверяющие не назначены
+                              {%endif%}
+                          </dd>
+                        </dl>
+                        <dl>
+                          <dt>Протокол проверки шкафов:</dt>
+                          <dd>{% if position_objects.reviewer_protocol%}
+                              <a href="{{position_objects.reviewer_protocol.url}}">Протокол проверки</a>
+                              {%endif%}
+                          </dd>
+                        </dl>
+                        <dl>
+                          <dt>Дата добавления позиции:</dt>
+                          <dd>{{position_objects.date_issue}}</dd>
+                        </dl>
+        </div>
+          <div class="row no-print">
+              <div class="col-12">
+                  <a class="btn btn-success btn-sm float-right" href="{% url 'position_objects_edit' position_objects.slug %}">Редактировать</a>
+                  <a class="btn btn-success btn-sm float-right" href="{% url 'position_objects_edit_checker' position_objects.slug %}">Назначить проверяющих</a>
+                  <a class="btn btn-success btn-sm float-right" href="{% url 'position_objects_upload_protokol' position_objects.slug %}">Добавить протокол проверки</a>
+                  <a class="btn btn-danger btn-sm float-left" href="{% url 'position_objects_delete' position_objects.slug %}">Удалить позицию</a>
+              </div>
+          </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+{% endblock %}

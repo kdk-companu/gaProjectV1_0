@@ -3,11 +3,10 @@
 {% block style %}
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-<!-- Select2 -->
-<link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css'%}">
-<link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'%}">
-
-<link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'%}">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css'%}">
+<!-- Bootstrap4 Duallistbox -->
+<link rel="stylesheet" href="{% static 'plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'%}">
 <!-- Theme style -->
 <link rel="stylesheet" href="{% static 'css/adminlte.css'%}">
 {% endblock %}
@@ -17,12 +16,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{title}} : {{ workers }}</h1>
+                    <h1>{{title}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Главная</a></li>
-                        <li class="breadcrumb-item active"><a href="{% url 'organization' %}">Фирмы</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'position_objects'%}">Позиции на объекте</a></li>
                     </ol>
                 </div>
             </div>
@@ -34,6 +33,9 @@
                 <!-- left column -->
                 <div class="col-md-12">
 
+
+                    <!-- general form elements -->
+                    <div class="card card-primary">
                  {% if messages %}
                      {% for message in messages %}
                          <div class="text-center alert alert-{{ message.tags }}">
@@ -42,30 +44,31 @@
                      {% endfor %}
                  {% endif %}
 
-                    <!-- general form elements -->
-                    <div class="card card-primary">
+  <!-- /.card-header -->
+
+
+
                         <div class="form-error">{{ forms.non_field_errors }}</div>
+
                         <form action="" method="post">
                             {% csrf_token %}
                             <div class="card-body">
-                                {% for fr in form%}
                                 <div class="form-group">
-                                    <label>{{ fr.label }}:</label>
-                                    {{ fr }}
+                                    <label>{{ form.checker.label }}:</label>
+                                    {{ form.checker }}
                                 </div>
-                                {% if fr.errors%}
+                                {% if form.checker.errors%}
                                 <div class="col-md-12">
                                     <div class="card card-danger">
                                         <div class="card-header">
                                             <h3 class="card-title">Ошибка</h3>
                                         </div>
                                         <div class="card-body">
-                                            {{ fr.errors }}
+                                            {{ form.checker.errors }}
                                         </div>
                                     </div>
                                 </div>
                                 {% endif %}
-                                {% endfor %}
                             </div>
                             <div class="row no-print">
                                 <div class="col-12">
@@ -89,26 +92,19 @@
 <script src="{% static 'plugins/jquery/jquery.min.js'%}"></script>
 <!-- Select2 -->
 <script src="{% static 'plugins/select2/js/select2.full.min.js'%}"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="{% static 'plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js'%}"></script>
 <!-- InputMask -->
 <script src="{% static 'plugins/moment/moment.min.js'%}"></script>
-<script src="{% static 'plugins/moment/moment-with-locales.min.js'%}"></script>
-
-<script src="{% static 'plugins/jQuery-Mask/jquery.mask.js'%}"></script>
-
+<script src="{% static 'plugins/inputmask/jquery.inputmask.min.js'%}"></script>
+<!-- date-range-picker -->
+<script src="{% static 'plugins/daterangepicker/daterangepicker.js'%}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js'%}"></script>
-
 <script>
   $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2();
-    //Date picker
-    $('#dateEmployment').datetimepicker({
-	    locale: 'ru',
-		stepping:10,
-		format: 'L',
-    });
+    //Bootstrap Duallistbox
+    $('.duallistbox').bootstrapDualListbox()
   })
-
 </script>
 {% endblock %}

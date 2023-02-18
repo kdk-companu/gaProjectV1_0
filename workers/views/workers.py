@@ -63,7 +63,7 @@ class Workers(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, ListView):
 
 
 class Workers_Add(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, CreateView):
-    '''Добавление нового сотрудника'''
+    """Добавление нового сотрудника"""
     model = User
     template_name = 'workers/workers_add.html'
     success_url = reverse_lazy('workers')
@@ -398,7 +398,6 @@ class Workers_Inn(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, UpdateVi
     redirect_field_name = ''
     permission_required = 'workers.user_basic_add_inn_superiors'
 
-    # Управление по slug
     def get_object(self, queryset=None):
         instance = User_Closed_Information.objects.get(user__slug=self.kwargs.get('workers_slug', ''))
         return instance
@@ -442,7 +441,7 @@ class Workers_Archive(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, Upda
 
 
 class Workers_Signature(LoginRequiredMixin, ViewsPermissionsMixin, DataMixin, UpdateView):
-    '''Загрузка подписи'''
+    """Загрузка подписи"""
     model = User_Closed_Information
     template_name = 'workers/workers_signature.html'
     form_class = Workers_Form_Upload_Signature
