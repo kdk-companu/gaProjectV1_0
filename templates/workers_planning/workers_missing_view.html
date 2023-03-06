@@ -1,0 +1,214 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block style %}
+<!-- Select2 -->
+<link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'%}">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'%}">
+<link rel="stylesheet" href="{% static 'css/adminlte.css'%}">
+{% endblock %}
+{% block content %}
+<!-- Основное поле -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <div class="card">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>{{title}}</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                            <li class="breadcrumb-item active">{{title}}</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">Фильтр</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if form_filter.errors %}
+                                <div class="alert alert-danger alert-dismissible">
+                                    <h5><i class="icon fas fa-ban"></i> Ошибка!</h5>
+                                    {% if form_filter.errors %}
+                                        {% for field in form_filter %}
+                                            {% for error in field.errors %}
+                                                Поле '{{field.label}}' - {{ error|escape }} <br>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% for not_field in form_filter.non_field_errors %}
+                                        {{ not_field }}<br>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                                {%endif%}
+                                <form action="" method="get">
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <label class="col-form-label float-right">От:</label>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group date" id="date_in_form" data-target-input="nearest">
+                                            {{form_filter.date_in}}
+                                                <div class="input-group-append" data-target="#date_in_form" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            <label class="col-form-label float-right">До:</label>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group date" id="date_out_form" data-target-input="nearest">
+                                                {{form_filter.date_out}}
+                                                <div class="input-group-append" data-target="#date_out_form" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            <label class="col-form-label float-right">Сотрудник:</label>
+                                        </div>
+                                        <div class="col-2">
+                                            {{form_filter.workers}}
+                                        </div>
+                                        <div class="col-3">
+                                            <button type="submit" class="btn btn-primary float-center">Поиск
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Сотрудник</th>
+                                        <th>Причина отсутсвия</th>
+                                        <th>Начало отсутствия</th>
+                                        <th>Окончание отсутсвия</th>
+                                        <th>Коментарии</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for worker_missing in workers_missing%}
+                                        <tr>
+                                            <td>{{worker_missing.user}}</td>
+                                            <td>{{worker_missing.information_missing}}</td>
+                                            <td>{{worker_missing.date_start}}</td>
+                                            <td>{{worker_missing.date_end}}</td>
+                                            <td>{{worker_missing.comments}}</td>
+                                            <td style="width: 95px">
+                                                <a class="btn btn-info btn-sm" href="{% url 'workers_missing_update' worker_missing.pk%}"><i class="fas fa-pencil-alt"></i></a>
+                                                <a class="btn btn-danger btn-sm" href="{% url 'workers_missing_delete' worker_missing.pk%}"><i class="fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor%}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                            {% if page_obj.has_other_pages %}
+                            <div class="card-footer clearfix">
+                                <ul class="pagination pagination-sm m-0 float-right">
+                                    {% if page_obj.has_previous%}
+                                    <li class="page-item">
+                                        {%if url_filter%}
+                                        <a class="page-link" href="{{url_filter}}&page={{page_obj.previous_page_number}}">«</a></li>
+                                        {%else%}
+                                        <a class="page-link" href="?page={{page_obj.previous_page_number}}">«</a></li>
+                                        {%endif%}
+                                    {% endif%}
+                                    {% for p in paginator.page_range %}
+                                        {% if page_obj.number == p%}
+                                            {%if url_filter%}
+                                            <li class="page-item"><a class="page-link" href="{{url_filter}}&page={{p}}">{{p}}</a></li>
+                                            {%else%}
+                                            <li class="page-item"><a class="page-link" href="?&page={{p}}">{{p}}</a></li>
+                                            {%endif%}
+                                        {%elif p >= page_obj.number|add:-10 and page_obj.number|add:10%}
+                                            {%if url_filter%}
+                                            <li class="page-item"><a class="page-link" href="{{url_filter}}&page={{p}}">{{p}}</a></li>
+                                            {%else%}
+                                            <li class="page-item"><a class="page-link" href="?&page={{p}}">{{p}}</a></li>
+                                            {%endif%}
+                                        {%endif%}
+                                    {% endfor%}
+                                    {% if page_obj.has_next%}
+                                    <li class="page-item">
+                                        {%if url_filter%}
+                                        <a class="page-link" href="{{url_filter}}&page={{page_obj.next_page_number}}">»</a></li>
+                                        {%else%}
+                                        <a class="page-link" href="?page={{page_obj.next_page_number}}">«</a></li>
+                                        {%endif%}
+                                    {% endif%}
+                                </ul>
+                            </div>
+                            {%endif%}
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                {% if perms.workers.add_department %}
+                <div class="timeline-footer">
+                    <a class="btn btn-success btn-sm float-right" href="{% url 'workers_missing_add' %}">Добавить
+                        отсутсвие сотрудника</a>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js'%}"></script>
+<!-- Select2 -->
+<script src="{% static 'plugins/select2/js/select2.full.min.js'%}"></script>
+<!-- InputMask -->
+<script src="{% static 'plugins/moment/moment.min.js'%}"></script>
+<script src="{% static 'plugins/inputmask/jquery.inputmask.min.js'%}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js'%}"></script>
+<script src="{% static 'plugins/moment/ru.js'%}"></script>
+<script>
+$(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2();
+    //Date picker
+    $('#date_out_form').datetimepicker({
+	    locale: 'ru',
+        format: 'DD.MM.YYYY',
+    });
+    $('#date_in_form').datetimepicker({
+	    locale: 'ru',
+        format: 'DD.MM.YYYY',
+    });
+    //mask
+    $('[data-mask]').inputmask();
+  })
+</script>
+{% endblock %}

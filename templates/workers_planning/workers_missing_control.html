@@ -1,0 +1,200 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block style %}
+<!-- Select2 -->
+<link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css'%}">
+<link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'%}">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'%}">
+<link rel="stylesheet" href="{% static 'css/adminlte.css'%}">
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{title}} : {{ workers }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'workers_missing'%}">Отсутсвие сотрудников</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                 {% if messages %}
+                     {% for message in messages %}
+                         <div class="text-center alert alert-{{ message.tags }}">
+                             {{ message|safe }}
+                         </div>
+                     {% endfor %}
+                 {% endif %}
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="form-error">{{ forms.non_field_errors }}</div>
+                        {% if form.errors %}
+                                <div class="alert alert-danger alert-dismissible">
+                                    <h5><i class="icon fas fa-ban"></i> Ошибка!</h5>
+                                    {% if form.errors %}
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                                Поле '{{field.label}}' - {{ error|escape }} <br>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% for not_field in form.non_field_errors %}
+                                        {{ not_field }}<br>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                        {%endif%}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>{{ form.user.label }}:</label>
+                                    {{ form.user }}
+                                </div>
+                                {% if form.user.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.user.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!-- //-->
+                                <div class="form-group">
+                                    <label>{{ form.information_missing.label }}:</label>
+                                    {{ form.information_missing }}
+                                </div>
+                                {% if form.information_missing.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.information_missing.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!-- //-->
+                                <div class="form-group">
+                                    <label>{{ form.date_start.label }}:</label>
+                                    <div class="input-group date" id="date_in_form" data-target-input="nearest">
+                                        {{form.date_start}}
+                                        <div class="input-group-append" data-target="#date_in_form" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if form.date_start.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.date_start.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!-- //-->
+                                <div class="form-group">
+                                    <label>{{ form.date_end.label }}:</label>
+                                    <div class="input-group date" id="date_out_form" data-target-input="nearest">
+                                        {{form.date_end}}
+                                        <div class="input-group-append" data-target="#date_out_form" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if form.date_end.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.date_end.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!-- //-->
+                                <div class="form-group">
+                                    <label>{{ form.comments.label }}:</label>
+                                    {{ form.comments }}
+                                </div>
+                                {% if form.comments.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Ошибка</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ form.comments.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="row no-print">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-success float-right">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+
+{% endblock %}
+{% block script %}
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js'%}"></script>
+<!-- Select2 -->
+<script src="{% static 'plugins/select2/js/select2.full.min.js'%}"></script>
+<!-- InputMask -->
+<script src="{% static 'plugins/moment/moment.min.js'%}"></script>
+<script src="{% static 'plugins/inputmask/jquery.inputmask.min.js'%}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js'%}"></script>
+<script src="{% static 'plugins/moment/ru.js'%}"></script>
+<script>
+$(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2();
+    //Date picker
+    $('#date_out_form').datetimepicker({
+	    locale: 'ru',
+        format: 'DD.MM.YYYY',
+    });
+    $('#date_in_form').datetimepicker({
+	    locale: 'ru',
+        format: 'DD.MM.YYYY',
+    });
+    //mask
+    $('[data-mask]').inputmask();
+  })
+</script>
+{% endblock %}

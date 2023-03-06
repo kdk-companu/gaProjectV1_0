@@ -1,0 +1,120 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block style %}
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<link rel="stylesheet" href="{% static 'plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css'%}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{% static 'css/adminlte.css'%}">
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{title}}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'information_schedule'%}">Информация о выходных днях и праздниках</a></li>
+
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        {% if messages %}
+                         {% for message in messages %}
+                             <div class="text-center alert alert-{{ message.tags }}">
+                                 {{ message|safe }}
+                             </div>
+                         {% endfor %}
+                        {% endif %}
+                        <div class="form-error">{{ forms.non_field_errors }}</div>
+                        <!-- /.card-header -->
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>{{ form.name.label }}:</label>
+                                    {{ form.name }}
+                                </div>
+                                {% if form.name.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.name.errors }}
+                                      </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!--//-->
+                                <div class="form-group">
+                                    <label>{{ form.color.label }}:</label>
+                                      <div class="input-group my-colorpicker2">
+                                        {{ form.color }}
+                                        <div class="input-group-append">
+                                          <span class="input-group-text"><i class="fas fa-square"></i></span>
+                                        </div>
+                                      </div>
+                                </div>
+                                {% if form.color.errors%}
+                                <div class="col-md-12">
+                                    <div class="card card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Ошибка</h3>
+                                      </div>
+                                      <div class="card-body">
+                                        {{ form.color.errors }}
+                                      </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="row no-print">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-success float-right">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!--/.col (left) -->
+                <!-- right column -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+</div>
+{% endblock %}
+{% block script %}
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js'%}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+<!-- bootstrap color picker -->
+<script src="{% static 'plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js'%}"></script>
+
+<script>
+  $(function () {
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+    $('.my-colorpicker2').on('colorpickerChange', function(event) {
+      $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+    })
+  })
+</script>
+{% endblock %}

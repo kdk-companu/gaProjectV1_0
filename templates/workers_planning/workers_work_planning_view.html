@@ -1,0 +1,221 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block style %}
+<style>
+.mission {
+	width: 100%;
+	border: none;
+	font-size: 12px;
+}
+.mission thead{
+    font-weight: bold;
+	text-align: center;
+	border: 1px solid black;
+	padding: 1px 1px;
+	background: #d8d8d8;
+	font-size: 12px;
+}
+.mission thead tr th{
+
+	border: 1px solid black;
+	background: #d8d8d8;
+}
+.mission-tr{
+    width: 20px;
+}
+.mission tbody td {
+	text-align: center;
+	border: 1px solid black;
+	padding: 1px 1px;
+	font-size: 12px;
+	vertical-align: top;
+}
+.mission tbody tr:nth-child(even){
+	background: #f3f3f3;
+}
+.mission tbody tr td:first-child {
+	border-radius: 8px 0 0 8px;
+}
+.mission tbody tr td:last-child {
+	border-radius: 0 0px 0px 0;
+}
+
+
+
+
+</style>
+{% endblock %}
+{% block content %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <div class="card">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Планирование работ</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{% url 'base_page'%}">Главная</a></li>
+                            <li class="breadcrumb-item">Планирование работ</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">Фильтр</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                            title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if form_filter.errors %}
+                                <div class="alert alert-danger alert-dismissible">
+                                    <h5><i class="icon fas fa-ban"></i> Ошибка!</h5>
+                                    {% if form_filter.errors %}
+                                    {% for field in form_filter %}
+                                    {% for error in field.errors %}
+                                    Поле '{{field.label}}' - {{ error|escape }} <br>
+                                    {% endfor %}
+                                    {% endfor %}
+                                    {% for not_field in form_filter.non_field_errors %}
+                                    {{ not_field }}<br>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                                {%endif%}
+                                <form action="" method="get">
+                                    <div class="row">
+                                        <div class="col-5"></div>
+                                        <div class="col-1">
+                                            <label class="col-form-label float-right">{{form_filter.month.label}}
+                                                :</label>
+                                        </div>
+                                        <div class="col-2">
+                                            {{form_filter.month}}
+                                        </div>
+                                        <div class="col-1">
+                                            <label class="col-form-label float-right">{{form_filter.year.label}}
+                                                :</label>
+                                        </div>
+                                        <div class="col-2">
+                                            {{form_filter.year}}
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <button type="submit" class="btn btn-primary btn">Поиск
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <div class="card">
+                            <!-- /.card-header -->
+                            <div class="timeline-footer">
+                                <a class="btn btn-secondary btn-sm float-right" href="{{up_month}}"> > </a>
+                                <a class="btn btn-secondary btn-sm float-left" href="{{down_month}}"> < </a>
+                            </div>
+                            <table class="mission">
+                                <thead>
+                                <tr>
+                                    <!-- Шапка месяца и пользователи//-->
+                                    <td rowspan="2" width="150">Сотрудиник</td>
+                                    {% for mon,days in calendar.items%}
+                                    <th colspan="{{days|length}}">{{mon}}</th>
+                                    {%endfor%}
+                                </tr>
+                                <tr>
+                                    <!--  Заполняем шапка даты//-->
+                                    {% for mon,days in calendar.items%}
+                                    {% for day in days%}
+                                    {% if day.1%}
+                                    <th class='mission-tr' style="background:{{day.3}}; ng-hide=true">{{day.0.day}}</th>
+                                    {% endif%}
+                                    {%endfor%}
+                                    {%endfor%}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for worker,graphs in calendar_workers.items%}
+                                <tr align="center">
+                                    <td>{{worker}}</td>
+                                    {% for graph in graphs%}
+                                    <td style="background:{{graph.3}}; ng-hide=true" colspan="{{graph.1}}">{{graph.2}}
+                                    </td>
+                                    {% endfor%}
+                                </tr>
+                                {% endfor%}
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                {% if perms.workers_certificates.certificate_parts_add %}
+
+
+                <div class="timeline-footer">
+                    <a class="btn btn-primary btn-sm float-left" style="margin:1px;"
+                       href="{% url 'information_missing' %}">Причины отсутсвия</a>
+
+                    <a class="btn btn-primary btn-sm float-left" style="margin:1px;"
+                       href="{% url 'information_schedule' %}">Праздники</a>
+
+                    <a class="btn btn-success btn-sm float-right" style="margin:1px;"
+                       href="{% url 'workers_missing' %}">Отсутствие</a>
+
+                    <a class="btn btn-success btn-sm float-right" style="margin:1px;"
+                       href="{% url 'workers_mission' %}">Командировки</a>
+
+                    <a class="btn btn-success btn-sm float-right" style="margin:1px;"
+                       href="{% url 'workers_weekend_work' %}">Работа в
+                        выходные в офисе</a>
+                </div>
+                {% endif %}
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+    </div>
+    <div class="card">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h5>Описание цвета</h5>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                {%for information_missing in information_missings%}
+                <div class="row">
+                    <div class="col-1" style="max-width: 30px;">
+                    </div>
+                    <div class="col-1" style="max-width: 30px;">
+                        <div style="width: 20px;height: 20px; background: {{information_missing.1}};border: 1px solid black;"></div>
+                    </div>
+                    <div class="col-3">{{information_missing.0}}</div>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
