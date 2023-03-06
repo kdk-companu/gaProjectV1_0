@@ -20,7 +20,14 @@ class Organizations_Objects(models.Model):
     short_names = models.CharField(max_length=80, unique=True, blank=True, verbose_name='Обиходные название')
     description = models.TextField(verbose_name='Описание объекта', blank=True)
     property_location = models.TextField(verbose_name='Расположение объекта. Транспорт.', blank=True)
-    slug = models.SlugField(max_length=100, unique=True, db_index=True,
+    pay_weekend = models.BooleanField(default=False, verbose_name='Оплата выходных')
+    pay_processing = models.BooleanField(default=False, verbose_name='Оплата переработки')
+    development_tasks = models.ManyToManyField('Development_Task', blank=True, related_name='development_tasks',
+                                              verbose_name='Задание на разработку')
+    position_objects = models.ManyToManyField('Position_Object', blank=True, related_name='position_objects',
+                                              verbose_name='Позиция на объекте')
+
+    slug = models.SlugField(max_length=150, unique=True, db_index=True,
                             verbose_name='URL')
 
     def __str__(self):
@@ -163,7 +170,7 @@ def folder_reviewer_protocol(instance, filename):
                                          instance.organizations_objects.pk, file_name)
 
 
-class Position_Objects(models.Model):
+class Position_Object(models.Model):
     """Позиция на объекте"""
     STATUS_COMPLETION_CHOICES = (
         ('Done', 'Выполнено'),
@@ -200,7 +207,7 @@ class Position_Objects(models.Model):
 
     def save(self, **kwargs):
         self.slug = slugify(translit(self.name, 'ru', reversed=True))
-        super(Position_Objects, self).save()
+        super(Position_Object, self).save()
 
     def __str__(self):
         return self.name
@@ -216,7 +223,7 @@ class Position_Objects(models.Model):
 
 class Сabinet(models.Model):
     """Шкаф"""
-    position_objects = models.ForeignKey(Position_Objects, on_delete=models.PROTECT, blank=False, null=True,
+    position_objects = models.ForeignKey(Position_Object, on_delete=models.PROTECT, blank=False, null=True,
                                          verbose_name='Позиция на объекте')
     name = models.CharField(max_length=255, unique=True, verbose_name='Название шкафа')
     factory_number = models.CharField(max_length=255, unique=True, verbose_name='Заводской номер')

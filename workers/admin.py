@@ -45,7 +45,4 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(User, CustomUserAdmin)
 
-# admin.site.register(Сertificates)
-# admin.site.register(Сertificate_Parts)
-# admin.site.register(Сertificate_Users)
 

@@ -20,7 +20,7 @@ class Workers_Login(LoginView):
 
 
 class Workers_Logout(LoginRequiredMixin, LogoutView):
-    template_name = 'prg_users/test.html'
+    template_name = 'prg_users/workers_missing_view.html'
     success_url = reverse_lazy('')
     login_url = 'login'
     redirect_field_name = ''

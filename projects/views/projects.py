@@ -13,7 +13,7 @@ from projects.forms import Project_Control, Organizations_Objects_Control, Devel
     Position_Objects_Control, Cabinet_Control, Development_Task_Filter, Development_Task_Edit_Date, \
     Development_Task_Edit_Develop, Development_Task_Edit_Status, Position_Objects_Filter, Position_Objects_Edit_Checker, \
     Position_Objects_Upload_Protocol
-from projects.models import Project, Organizations_Objects, Development_Task, Position_Objects, Сabinet
+from projects.models import Project, Organizations_Objects, Development_Task, Position_Object, Сabinet
 from workers.utils import DataMixin
 
 
@@ -191,7 +191,7 @@ class Development_Task_View(DataMixin, ListView):
 
 
 class Development_Task_Add(DataMixin, CreateView):
-    '''Задание на разработку. Просмотр'''
+    """Задание на разработку. Просмотр"""
     model = Development_Task
     template_name = 'projects/development_task_add.html'
     form_class = Development_Task_Control
@@ -333,14 +333,14 @@ class Development_Task_Delete(DataMixin, DeleteView):
 
 class Position_Objects_View(DataMixin, ListView):
     """Позиция на объекте"""
-    model = Position_Objects
+    model = Position_Object
     template_name = 'projects/objects_position_view.html'
     context_object_name = 'position_objects'
 
     def get_queryset(self):
         """Возможные запросы. Требуется подумать и добавить фильтры по отдела и управлениям"""
-        return Position_Objects.objects.filter(development_task__subdivision=self.request.user.subdivision,
-                                               development_task__department=self.request.user.department).order_by(
+        return Position_Object.objects.filter(development_task__subdivision=self.request.user.subdivision,
+                                              development_task__department=self.request.user.department).order_by(
             '-date_issue')
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -353,7 +353,7 @@ class Position_Objects_View(DataMixin, ListView):
 
 class Position_Objects_Add(DataMixin, CreateView):
     """Позиция на объекте. Просмотр"""
-    model = Position_Objects
+    model = Position_Object
     template_name = 'projects/objects_position_control.html'
     form_class = Position_Objects_Control
     success_url = reverse_lazy('position_objects')
@@ -371,7 +371,7 @@ class Position_Objects_Add(DataMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        position_objects = Position_Objects.objects.latest('id')
+        position_objects = Position_Object.objects.latest('id')
 
         folder = 'media/projects/{0}/{1}/{2}'.format(
             str(position_objects.organizations_objects.organization.pk),
@@ -384,31 +384,31 @@ class Position_Objects_Add(DataMixin, CreateView):
 
 class Position_Objects_Edit(DataMixin, UpdateView):
     """Задание на разработку. Просмотр"""
-    model = Position_Objects
+    model = Position_Object
     template_name = 'projects/objects_position_control.html'
     form_class = Position_Objects_Control
     success_url = reverse_lazy('position_objects')
 
     def get_object(self, queryset=None):
-        instance = Position_Objects.objects.get(slug=self.kwargs.get('position_objects_slug', ''))
+        instance = Position_Object.objects.get(slug=self.kwargs.get('position_objects_slug', ''))
         return instance
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(Position_Objects_Edit, self).get_context_data(**kwargs)
         project_menus = self.get_user_context(title='Довить документ')
         context = dict(list(context.items()) + list(project_menus.items()))
-        context['position_objects_slug'] = Position_Objects.objects.get(slug=self.kwargs.get('position_objects_slug'))
+        context['position_objects_slug'] = Position_Object.objects.get(slug=self.kwargs.get('position_objects_slug'))
         return context
 
 
 class Position_Objects_DetailView(DataMixin, DetailView):
     """Задание на разработку. Детальный просмот проекта"""
-    model = Position_Objects
+    model = Position_Object
     template_name = 'projects/objects_position_detailview.html'
     context_object_name = 'position_objects'
 
     def get_object(self, queryset=None):
-        instance = Position_Objects.objects.get(slug=self.kwargs.get('position_objects_slug', ''))
+        instance = Position_Object.objects.get(slug=self.kwargs.get('position_objects_slug', ''))
         return instance
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -419,12 +419,12 @@ class Position_Objects_DetailView(DataMixin, DetailView):
 
 
 class Position_Objects_Delete(DataMixin, DeleteView):
-    model = Position_Objects
+    model = Position_Object
     template_name = 'projects/objects_position_delete.html'
     success_url = reverse_lazy('position_objects')
 
     def get_object(self, queryset=None):
-        instance = Position_Objects.objects.get(slug=self.kwargs.get('position_objects_slug', ''))
+        instance = Position_Object.objects.get(slug=self.kwargs.get('position_objects_slug', ''))
         return instance
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -436,12 +436,12 @@ class Position_Objects_Delete(DataMixin, DeleteView):
 
 class Position_Objects_Edit_Checker(DataMixin, UpdateView):
     """Задание на разработку. Назначение проверяющих."""
-    model = Position_Objects
+    model = Position_Object
     template_name = 'projects/objects_position_edit_checker.html'
     form_class = Position_Objects_Edit_Checker
 
     def get_object(self, queryset=None):
-        instance = Position_Objects.objects.get(slug=self.kwargs.get('position_objects_slug', ''))
+        instance = Position_Object.objects.get(slug=self.kwargs.get('position_objects_slug', ''))
         return instance
 
     def get_success_url(self):
@@ -454,24 +454,24 @@ class Position_Objects_Edit_Checker(DataMixin, UpdateView):
         context = super(Position_Objects_Edit_Checker, self).get_context_data(**kwargs)
         project_menus = self.get_user_context(title='Довить документ')
         context = dict(list(context.items()) + list(project_menus.items()))
-        context['position_objects_slug'] = Position_Objects.objects.get(slug=self.kwargs.get('position_objects_slug'))
+        context['position_objects_slug'] = Position_Object.objects.get(slug=self.kwargs.get('position_objects_slug'))
         return context
 
 
 class Position_Objects_Upload_Protocol(DataMixin, UpdateView):
-    model = Position_Objects
+    model = Position_Object
     template_name = 'projects/objects_position_edit_protocol.html'
     form_class = Position_Objects_Upload_Protocol
 
     def get_object(self, queryset=None):
-        instance = Position_Objects.objects.get(slug=self.kwargs.get('position_objects_slug', ''))
+        instance = Position_Object.objects.get(slug=self.kwargs.get('position_objects_slug', ''))
         return instance
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(Position_Objects_Upload_Protocol, self).get_context_data(**kwargs)
         project_menus = self.get_user_context(title='Добавить протокол проверки')
         context = dict(list(context.items()) + list(project_menus.items()))
-        context['position_objects'] = Position_Objects.objects.get(slug=self.kwargs.get('position_objects_slug'))
+        context['position_objects'] = Position_Object.objects.get(slug=self.kwargs.get('position_objects_slug'))
         return context
 
     def get_success_url(self):

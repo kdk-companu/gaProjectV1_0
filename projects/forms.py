@@ -4,7 +4,7 @@ import datetime
 from django.core.exceptions import ValidationError
 
 from projects.models import Organization_Direction, Organization, Type_Document, Project, Organizations_Objects, \
-    Development_Task, Position_Objects, Сabinet
+    Development_Task, Position_Object, Сabinet
 from workers.models import Subdivision, Department
 
 
@@ -165,7 +165,6 @@ class Development_Task_Control(forms.ModelForm):
 
 class Development_Task_Edit_Date(forms.ModelForm):
     """Задание на разработку"""
-
     class Meta:
         model = Development_Task
         fields = (
@@ -288,13 +287,12 @@ class Development_Task_Filter(forms.Form):
 
 class Position_Objects_Control(forms.ModelForm):
     """Задание на разработку"""
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['development_task'].empty_label = "Задания на ППО"
 
     class Meta:
-        model = Position_Objects
+        model = Position_Object
         fields = ['development_task', 'name', 'short_names', 'description']
         widgets = {
             'development_task': forms.Select(
@@ -348,7 +346,7 @@ class Position_Objects_Edit_Checker(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
     class Meta:
-        model = Position_Objects
+        model = Position_Object
         fields = ['checker', ]
         widgets = {
             'checker': forms.SelectMultiple(
@@ -379,7 +377,7 @@ class Position_Objects_Upload_Protocol(forms.ModelForm):
             raise ValidationError("Не удалось прочитать загруженный файл")
 
     class Meta:
-        model = Position_Objects
+        model = Position_Object
         fields = ('reviewer_protocol',)
         widgets = {
             'reviewer_protocol': forms.FileInput(

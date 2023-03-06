@@ -10,6 +10,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('workers.urls')),
     path('', include('workers_certificates.urls')),
+    path('', include('workers_planning.urls')),
     path('', include('projects.urls')),
 
     path('login/', Workers_Login.as_view(), name='login'),

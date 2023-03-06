@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-gm)i3f4w@lz)2ekh^-o-nn!7=&2f_z+elvk!(3@99$6z_a=i%e"
@@ -9,7 +10,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'workers.User'
 
-
 MESSAGE_TAGS = {
     messages.DEBUG: 'debug',
     messages.INFO: 'info',
@@ -17,7 +17,6 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
-
 
 INSTALLED_APPS = [
 
@@ -31,6 +30,7 @@ INSTALLED_APPS = [
     'changelog_workers.apps.ChangelogConfig',
     'workers.apps.WorkersConfig',
     'workers_certificates.apps.WorkersCertificatesConfig',
+    'workers_planning.apps.WorkersPlanningConfig',
     'projects.apps.ProjectConfig',
 
 ]
@@ -66,7 +66,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "settings.wsgi.application"
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -90,11 +89,10 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
 ]
-
 
 LANGUAGE_CODE = 'ru-ru'
 
@@ -103,7 +101,6 @@ TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files
 STATIC_URL = '/static/'
@@ -114,7 +111,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
